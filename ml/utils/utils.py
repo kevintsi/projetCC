@@ -7,34 +7,52 @@ import datetime
 
 class DataHandler:
     """
-        Class which retrieve data and initialization of data
+        Class which retrieves and initializes data
     """
 
     def __init__(self):
+        """
+            Initialize data
+        """
         print("Initialization")
         self.df_listings_final = None
         self.df_price_availability = None
         self.df_merge = None
 
     def get_data(self):
+        """
+            Get data from bucket
+        """
         print("Get data from bucket")
         self.df_listings_final = pds.read_csv("https://storage.googleapis.com/h3-data/listings_final.csv", sep=";")
 
     def group_data(self):
+        """
+            Merge both datasets
+        """
         # merge
         print("Data merged") 
         self.df_merge = pds.merge(self.df_price_availability.groupby('listing_id')['local_price'].mean(), self.df_listings_final, on='listing_id')
 
     def get_process_data(self):
+        """
+            Call all the functions
+        """
         self.get_data()
         self.group_data()
         
 class FeatureRecipe:
     """
-        Class which split by type of data
+        Class which split by type of data and delete useless features
     """
     
     def __init__(self, data: pds.DataFrame):
+        """
+            Initialize data
+
+        Args:
+            data (pds.DataFrame): Dataset to be used
+        """
         print("FeatureRecipe starts...")
         self.df = data
         self.cate = []
@@ -43,6 +61,9 @@ class FeatureRecipe:
         print("End of FeatureRecipe initialisation\n")
     
     def separate_variable_types(self) -> None:
+        """
+            Separate types of variable
+        """
         print("Separate variable types starts...")
         for col in self.df.columns:
             if self.df[col].dtypes == int:
@@ -56,6 +77,9 @@ class FeatureRecipe:
         len(self.intt),len(self.floa),len(self.cate),len(self.intt)+len(self.floa)+len(self.cate) ))
         
     def drop_uselessf(self):
+        """
+            Delete all useless features
+        """ 
         print("Drop useless feature start...")
         
         if "Unnamed: 0" in self.df.columns:
@@ -69,6 +93,9 @@ class FeatureRecipe:
         print("Number columns remaining {}\n".format(len(self.df.columns)))
         
     def deal_duplicate(self):
+        """
+            Retrieve all duplicates and delete them if there are
+        """
         print("Deal duplicate start...")
         duplicates = self.get_duplicates()
         if len(duplicates) != 0:
@@ -78,6 +105,12 @@ class FeatureRecipe:
         print("Deal duplicate end...")
     
     def drop_nanp(self, threshold: float):
+        """
+            Delete columns with @threshold % of NAN
+
+        Args:
+            threshold (float): Pourcentage
+        """
         dropped = 0
         print("Drop columns with {} percentage of NAN".format(threshold))
         self.get_duplicates()
@@ -90,6 +123,12 @@ class FeatureRecipe:
         print("Number of columns dropped : {}\n".format(dropped))
     
     def get_duplicates(self):
+        """
+            Get all duplicates
+
+        Returns:
+            list : List of columns to drop 
+        """
         print("Get duplicates")
         drop_col = []
         for col_index in range(self.df.shape[1]):
@@ -103,6 +142,12 @@ class FeatureRecipe:
     #    pass
     
     def prepare_data(self, threshold: float):
+        """
+            Call all the methods
+
+        Args:
+            threshold (float): Pourcentage
+        """
         self.drop_uselessf()
         self.separate_variable_types()
         self.deal_duplicate()
@@ -111,19 +156,25 @@ class FeatureRecipe:
 
 class FeatureExtractor:
     """
-        Feature Extractor class
+        Feature Extractor class which will extract all and split the data that will be used to train  
     """
     
     def __init__(self, data : pds.DataFrame, flist: list):
         """
-            Input : pandas.DataFrame, feature list to drop
-            Output : X_train, X_test, y_train, y_test according to sklearn.model_selection.train_test_split
+            Initalize data
+
+        Args:
+            data (pds.DataFrame): Dataset to be used
+            flist (list): list of features
         """
         self.x_train, self.x_test, self.y_train, self.y_test = None, None, None, None
         self.df = data
         self.flist = flist
     
     def extract(self):
+        """
+            Extract data
+        """
         print("Extraction start...")
         for col in self.df.columns:
             if col in self.flist:
@@ -131,6 +182,15 @@ class FeatureExtractor:
         print("Extraction end...\n")
         
     def split(self, size_test:float, rnge:int, target:str):
+        """
+            Split data and get X_train, X_test, y_train, y_test 
+        Args:
+            size_test (float): Proportion of data to be used when test split 
+            rnge (int): Controls the shuffling applied to the data before applying the split
+            target (str): The target
+        Returns:
+            tuple: X_train, X_test, y_train, y_test 
+        """
         print("Splitting start...")
         print(self.df.loc[:,self.df.columns != target])
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.df.loc[:,self.df.columns != target], self.df[target], test_size=size_test, random_state=rnge)
@@ -142,6 +202,12 @@ class ModelBuilder:
         Class for train and print results of ml model 
     """
     def __init__(self, model_path: str = None, save: bool = None):
+        """
+            Instanciate the LinearRegression class and path to save model
+        Args:
+            model_path (str, optional): Path where to save model. Defaults to None.
+            save (bool, optional): Already save or not. Defaults to None.
+        """
         print("Start constructing ModelBuilder instance...")
         self.path = model_path
         self.save = save
@@ -152,25 +218,52 @@ class ModelBuilder:
         pass
     
     def train(self, X, Y):
+        """
+            Train
+        Args:
+            X (matrix): Training data
+            Y (matrix): Target values
+        """
         self.reg.fit(X, Y)
     
     def predict_test(self, X) -> np.ndarray:
+        """
+            Predict value
+        Args:
+            X (matrix): Samples
+
+        Returns:
+            np.ndarray: Predict values
+        """
         return self.reg.predict(X)
         
     def predict_from_dump(self, X) -> np.ndarray:
         pass
     
     def save_model(self):
+        """
+            Save model
+        """
         #with the format : 'model_{}_{}'.format(date)
-        res = pickle.dumps(self.reg)
-        dump(res, "{}/model_{}.joblib".format(self.path, datetime.now()))
+        dump(self.reg, "{}/model.joblib".format(self.path))
     
     def print_accuracy(self, X_test, y_test):
+        """
+            Print accuracy of algorithm
+        Args:
+            X_test (matrix): Trained test features
+            y_test (matrix): Trained test target
+        """
         print("Coef accurancy : {} %".format(self.reg.score(X_test, y_test)*100))
 
     def load_model(self):
+        """
+            Load model
+        Returns:
+            model : Model
+        """
         try:
             #load model
-            clt = load("{}/model_{}.joblib".format(self.path, datetime.now()))
+            return load("{}/model.joblib".format(self.path))
         except:
             print("File doesn't exist. You must save the model first")
