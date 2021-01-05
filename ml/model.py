@@ -2,7 +2,7 @@ from utils.utils import DataHandler, FeatureExtractor, FeatureRecipe
 
 def DataManager(bucket: str = None, d: DataHandler=None, fr: FeatureRecipe=None, fe: FeatureExtractor=None):
     """
-        Fonction qui lie les 3 premières classes de la pipeline et qui retourne FeatureExtractor.split(0.1)
+       FUnction which link the 3 classers and return FeatureExtractor.split(0.1)
     
     Args:
         d (DataHandler, optional): [description]. Defaults to None.
