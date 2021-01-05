@@ -25,6 +25,7 @@ class DataHandler:
         """
         print("Get data from bucket")
         self.df_listings_final = pds.read_csv("https://storage.googleapis.com/h3-data/listings_final.csv", sep=";")
+        self.df_price_availability = pds.read_csv("https://storage.googleapis.com/h3-data/price_availability.csv", sep=";")
 
     def group_data(self):
         """
@@ -40,6 +41,7 @@ class DataHandler:
         """
         self.get_data()
         self.group_data()
+        return self.df_merge
         
 class FeatureRecipe:
     """
@@ -67,11 +69,11 @@ class FeatureRecipe:
         print("Separate variable types starts...")
         for col in self.df.columns:
             if self.df[col].dtypes == int:
-                self.intt.append(self.df[col])
+                self.intt.append(col)
             elif self.df[col].dtypes == float:
-                self.floa.append(self.df[col])
+                self.floa.append(col)
             else:
-                self.cate.append(self.df[col])
+                self.cate.append(col)
         print("Separate variable types end...")
         print ("Dataset number of columns : {} \nnumber of discreet values : {} \nnumber of continuous values : {} \nnumber of others : {} \ntotal size : {}\n".format(len(self.df.columns),
         len(self.intt),len(self.floa),len(self.cate),len(self.intt)+len(self.floa)+len(self.cate) ))
@@ -177,9 +179,10 @@ class FeatureExtractor:
         """
         print("Extraction start...")
         for col in self.df.columns:
-            if col in self.flist:
+            if col not in self.flist:
                 self.df.drop(col, axis=1, inplace=True)
         print("Extraction end...\n")
+        print(self.df)
         
     def split(self, size_test:float, rnge:int, target:str):
         """
@@ -215,7 +218,7 @@ class ModelBuilder:
         print("End constructing ModelBuilder instance...")
         
     def __repr__(self):
-        pass
+        return "Path : {} , Regression : {}".format(self.path, self.reg)
     
     def train(self, X, Y):
         """
@@ -238,7 +241,7 @@ class ModelBuilder:
         return self.reg.predict(X)
         
     def predict_from_dump(self, X) -> np.ndarray:
-        pass
+        return self.reg.predict(X)
     
     def save_model(self):
         """
@@ -246,19 +249,22 @@ class ModelBuilder:
         """
         #with the format : 'model_{}_{}'.format(date)
         dump(self.reg, "{}/model.joblib".format(self.path))
+        print("Dump done successfully")
     
     def print_accuracy(self, X_test, y_test):
         """
             Print accuracy of algorithm
+
         Args:
             X_test (matrix): Trained test features
             y_test (matrix): Trained test target
         """
-        print("Coef accurancy : {} %".format(self.reg.score(X_test, y_test)*100))
+        print("Coefficient accurancy : {} %".format(self.reg.score(X_test, y_test)*100))
 
     def load_model(self):
         """
             Load model
+
         Returns:
             model : Model
         """
