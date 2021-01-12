@@ -6,7 +6,7 @@ The goal of this project was to create a model using an algorithm (Linear Regres
 
 For this small project I used two dataset : 
 
-<a>https://storage.googleapis.com/h3-data/listings_final.csv</a>
+<a>https://storage.googleapis.com/h3-data/listings_final.csv</a><br/>
 <a>https://storage.googleapis.com/h3-data/price_availability.csv</a>
 
 And the Linear Regression algorithm in order to predict the local_price depending on :
@@ -20,6 +20,8 @@ And the Linear Regression algorithm in order to predict the local_price dependin
 - Beds
 - Bedrooms
 - Bathrooms
+
+You can access the project through this link : <a>https://kt-cc-mini-project.herokuapp.com</a>
 
 ## API
 
