@@ -1,3 +1,5 @@
+**Access to french readme : <a>https://github.com/kevintsi/projetCC/README_FR.md</a>** 
+
 # Small Project in Cloud Computing
 
 ## Objectif
