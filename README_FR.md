@@ -1,4 +1,4 @@
-**Accès au README anglais : <a>https://github.com/kevintsi/projetCC/README.md</a>** 
+**Accès au README anglais : <a>https://github.com/kevintsi/projetCC/blob/main/README.md</a>** 
 
 # Mini Projet en Cloud Computing
 

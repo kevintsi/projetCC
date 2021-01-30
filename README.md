@@ -1,4 +1,4 @@
-**Access to french readme : <a>https://github.com/kevintsi/projetCC/README_FR.md</a>** 
+**Access to french readme : <a>https://github.com/kevintsi/projetCC/blob/main/README_FR.md</a>** 
 
 # Small Project in Cloud Computing
 
