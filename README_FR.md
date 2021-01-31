@@ -1,3 +1,19 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Mini Projet en Cloud Computing](#mini-projet-en-cloud-computing)
+  - [Objectif](#objectif)
+  - [Pipeline](#pipeline)
+    - [Data Handler](#data-handler)
+    - [Feature Recipe](#feature-recipe)
+    - [Feature Extractor](#feature-extractor)
+    - [Model Builder](#model-builder)
+  - [API](#api)
+    - [Routes disponibles](#routes-disponibles)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 **Accès au README anglais : <a>https://github.com/kevintsi/projetCC/blob/main/README.md</a>** 
 
 # Mini Projet en Cloud Computing

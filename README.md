@@ -1,3 +1,19 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Small Project in Cloud Computing](#small-project-in-cloud-computing)
+  - [Objectif](#objectif)
+  - [Pipeline](#pipeline)
+    - [Data Handler](#data-handler)
+    - [Feature Recipe](#feature-recipe)
+    - [Feature Extractor](#feature-extractor)
+    - [Model Builder](#model-builder)
+  - [API](#api)
+    - [Available routes](#available-routes)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 **Access to french readme : <a>https://github.com/kevintsi/projetCC/blob/main/README_FR.md</a>** 
 
 # Small Project in Cloud Computing
