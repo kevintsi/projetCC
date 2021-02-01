@@ -38,7 +38,7 @@ Et l'algorithme Régression Lineaire dans le but de prédire le prix local en fo
 - Nombre de chambres
 - Nombre de salle de bains
 
-Vous pouvez accéder au projet à travers ce lien : <a>https://kt-cc-mini-project.herokuapp.com</a> 
+Vous pouvez accéder au doc swagger du projet  à travers ce lien : <a>https://kt-cc-mini-project.herokuapp.com/docs</a> 
 
 ## Pipeline
 

@@ -38,7 +38,7 @@ And the Linear Regression algorithm in order to predict the local_price dependin
 - Bedrooms
 - Bathrooms
 
-You can access the project through this link : <a>https://kt-cc-mini-project.herokuapp.com</a>
+You can access the project's swagger docs through this link : <a>https://kt-cc-mini-project.herokuapp.com/docs</a>
 
 ## Pipeline
 
